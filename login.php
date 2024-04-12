@@ -36,17 +36,17 @@ session_start();
 
         if(duplicate($useremail,$db)){
             echo "User already exists";
-            exit();
-        }
+            }
 
-        if(!empty($useremail) && !empty($password)){
+        else if(!empty($useremail) && !empty($password)){
             $query = "INSERT INTO account (useremail, password) VALUES ('$useremail', '$password')";
             mysqli_query($db, $query);
             header("Location: chat.php");
             exit();
-        }
-            else{
-                echo "Please fill in the required information";
+            }
+        
+        else{
+            echo "Please fill in the required information";
             }
         }
 
