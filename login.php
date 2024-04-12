@@ -34,14 +34,19 @@ session_start();
         $useremail = $_POST['useremail'];
         $password=$_POST['password'];
 
-        if(!empty($useremail) && !empty($password)){
+        if(duplicate($useremail,$db)){
+            echo "User already exists";
+            }
+
+        else if(!empty($useremail) && !empty($password)){
             $query = "INSERT INTO account (useremail, password) VALUES ('$useremail', '$password')";
             mysqli_query($db, $query);
             header("Location: chat.php");
             exit();
-        }
-            else{
-                echo "Please fill in the required information";
+            }
+        
+        else{
+            echo "Please fill in the required information";
             }
         }
 
