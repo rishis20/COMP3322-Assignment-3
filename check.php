@@ -1,8 +1,7 @@
 <?php
 
 function check_login($db){
-
-    if(isset($_SESSION['id'])){
+    if(isset($_SESSION['id'])){ 
         $id = $_SESSION['id'];
         $query = "SELECT * FROM account WHERE id='$id'";
         $result = mysqli_query($db, $query);
