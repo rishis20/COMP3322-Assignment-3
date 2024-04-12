@@ -16,7 +16,9 @@ const loadMessages = () => {
           <div id="${
             response[i].person === username ? "sent-messages" : "received-messages"
           }">
+            <span class="sender-receiver" style="display: ${response[i].person === username ? 'none' : 'block'}">${response[i].person}</span>
             <p>${response[i].message}</p>
+            <span class="timestamp">${response[i].time}</span>
           </div>
           `;
       }
@@ -44,7 +46,9 @@ const loadMessages = () => {
             for (a = 0; a < response.length; a++) {
               container.innerHTML += `
                 <div id="received-messages">
+                <span class="sender-receiver" style="display: ${response[a].person === username ? 'none' : 'block'}">${response[a].person}</span>
                   <p>${response[a].message}</p>
+                  <span class="timestamp">${response[a].time}</span>
                 </div>
               `;
             }
@@ -79,6 +83,13 @@ form.addEventListener("submit", function (e) {
   container.innerHTML += `
     <div id="sent-messages">
       <p>${messageInput}</p>
+      <span class="timestamp">${new Date().toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'UTC'
+      })}</span>
     </div>
     `;
 
