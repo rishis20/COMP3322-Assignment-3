@@ -34,6 +34,11 @@ session_start();
         $useremail = $_POST['useremail'];
         $password=$_POST['password'];
 
+        if(duplicate($useremail,$db)){
+            echo "User already exists";
+            exit();
+        }
+
         if(!empty($useremail) && !empty($password)){
             $query = "INSERT INTO account (useremail, password) VALUES ('$useremail', '$password')";
             mysqli_query($db, $query);

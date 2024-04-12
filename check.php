@@ -17,4 +17,13 @@ function check_login($db){
     }
 }
 
+function duplicate($useremail,$db){
+    $query = "SELECT * FROM account WHERE useremail='$useremail'";
+    $result = mysqli_query($db, $query);
+    if(mysqli_num_rows($result) > 0){
+        return true;
+    }
+    return false;
+}
+
 ?>
