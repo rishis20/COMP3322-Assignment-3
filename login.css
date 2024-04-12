@@ -1,0 +1,47 @@
+/* Add your CSS styling here */
+body {
+    font-family: Arial, sans-serif;
+}
+
+ .center-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+#box{
+    padding: 20px;
+    margin: auto;
+    border: thick black solid;
+}
+
+.textbox{
+    height: 25px;
+    border-radius: 5px;
+    padding: 4px;
+    border: solid thin #aaa;
+    width:90%;
+    height:50%;
+}
+
+
+input[type="text"],
+input[type="password"],
+
+
+button {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+
+/* Add more styles as needed */
