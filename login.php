@@ -6,6 +6,11 @@ session_start();
 
     $db = mysqli_connect("mydb", "dummy", "c3322b", "db3322") or die('Error connecting to MySQL server.'.mysqli_connect_error());
     
+    // At the top of your script
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        unset($_SESSION['duplicate']);
+    }
+
 
     if (isset($_GET['action']) && $_GET['action'] == 'signout') {
         $_SESSION = array();
@@ -14,7 +19,7 @@ session_start();
             setcookie(session_name(), '', time() - 120, '/');
         }
     
-        // Destroy the session
+        unset($_SESSION['id'])
         session_destroy();
     
         // Redirect to login.php
@@ -35,7 +40,7 @@ session_start();
         $password=$_POST['password'];
 
         if(duplicate($useremail,$db)){
-            echo "User already exists";
+            $_SESSION['duplicate'] = "User already exists";
             }
 
         else if(!empty($useremail) && !empty($password)){
@@ -93,17 +98,21 @@ session_start();
     <div id="box">
         <form id="loginForm" method="post" style= "display:block;">
         <h2>Login</h2>
-            <input class="textbox" type="email" name="useremail" placeholder="Email" required> <br>
-            <input class="textbox" type="password" name="password" placeholder="Password" required> <br>
+            <input class="textbox" name="useremail" id="useremail" placeholder="Email"> <br>
+            <input class="textbox" type="password" id="useremail" name="password" placeholder="Password"> <br>
             <button type="submit" name="login">Login</button> <br>
             <p> Don't have a password? Click here to <a href="javascript:void(0);" id="showRegisterForm">Register</a> </p>
+            <?php if (isset($_SESSION['duplicate'])): ?>
+                <p class="error-message">The account already exists.</p>
+            <?php unset($_SESSION['duplicate']); ?>
+            <?php endif; ?>
         </form>
 
         <form id="registerForm" method="post" style="display:none;">
         <h2>Register</h2>
-            <input class="textbox" type="email" name="useremail" placeholder="Email" required><br>
-            <input class="textbox" type="password" name="password" placeholder="Password" required><br>
-            <input class="textbox" type="password" name="confirmPassword" placeholder="Password" required><br>
+            <input class="textbox"  name="useremail" id="useremail" placeholder="Email"><br>
+            <input class="textbox" type="password" name="password" id="password" placeholder="Password"><br>
+            <input class="textbox" type="password" name="confirmPassword" id="confirmPassword" placeholder="Password"><br>
             <button type="submit" name="register">Register</button>
             <p> Already have an account? Click here to <a href="javascript:void(0);" id="showLoginForm">Login</a> </p>
         </form>
