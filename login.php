@@ -3,6 +3,9 @@
 include('check.php');
 // Start the session
 session_start();
+if(isset($_SESSION['passworderror'])) {
+    unset($_SESSION['passworderror']);
+}
 
     $db = mysqli_connect("mydb", "dummy", "c3322b", "db3322") or die('Error connecting to MySQL server.'.mysqli_connect_error());
     
@@ -19,7 +22,7 @@ session_start();
             setcookie(session_name(), '', time() - 120, '/');
         }
     
-        unset($_SESSION['id'])
+        unset($_SESSION['id']);
         session_destroy();
     
         // Redirect to login.php
@@ -46,6 +49,7 @@ session_start();
         else if(!empty($useremail) && !empty($password)){
             $query = "INSERT INTO account (useremail, password) VALUES ('$useremail', '$password')";
             mysqli_query($db, $query);
+            $_SESSION['id'] = mysqli_insert_id($db);
             header("Location: chat.php");
             exit();
             }
@@ -69,7 +73,7 @@ session_start();
                         header("Location: chat.php");
                         exit();
                     } else {
-                        echo "The password is incorrect";
+                        $_SESSION['passworderror'] = "The password is incorrect";
                     }
                 } else {
                     echo "User does not exist or wrong credentials";
@@ -99,9 +103,10 @@ session_start();
         <form id="loginForm" method="post" style= "display:block;">
         <h2>Login</h2>
             <input class="textbox" name="useremail" id="useremail" placeholder="Email"> <br>
-            <input class="textbox" type="password" id="useremail" name="password" placeholder="Password"> <br>
+            <input class="textbox" type="password" id="password" name="password" placeholder="Password"> <br>
             <button type="submit" name="login">Login</button> <br>
             <p> Don't have a password? Click here to <a href="javascript:void(0);" id="showRegisterForm">Register</a> </p>
+            <p  class="error-message"><?php echo isset($_SESSION['passworderror']) ? $_SESSION['passworderror'] : null ?></p>
             <?php if (isset($_SESSION['duplicate'])): ?>
                 <p class="error-message">The account already exists.</p>
             <?php unset($_SESSION['duplicate']); ?>
@@ -110,9 +115,9 @@ session_start();
 
         <form id="registerForm" method="post" style="display:none;">
         <h2>Register</h2>
-            <input class="textbox"  name="useremail" id="useremail" placeholder="Email"><br>
-            <input class="textbox" type="password" name="password" id="password" placeholder="Password"><br>
-            <input class="textbox" type="password" name="confirmPassword" id="confirmPassword" placeholder="Password"><br>
+            <input class="textbox"  name="useremail" id="r-useremail" placeholder="Email"><br>
+            <input class="textbox" type="password" name="password" id="r-password" placeholder="Password"><br>
+            <input class="textbox" type="password" name="confirmPassword" id="r-confirmPassword" placeholder="Password"><br>
             <button type="submit" name="register">Register</button>
             <p> Already have an account? Click here to <a href="javascript:void(0);" id="showLoginForm">Login</a> </p>
         </form>

@@ -25,4 +25,22 @@ function duplicate($useremail,$db){
     return false;
 }
 
+function check_username($username, $db){
+    $query = "SELECT * FROM account WHERE useremail='$username'";
+    $result = mysqli_query($db, $query);
+    if(mysqli_num_rows($result) > 0){
+        return true;
+    }
+    return false;
+}
+
+function check_password($password, $username, $db){
+    $query = "SELECT * FROM account WHERE password='$password'";
+    $result = mysqli_query($db, $query);
+    if(mysqli_num_rows($result) > 0){
+        return true;
+    }
+    return false;
+}
+
 ?>

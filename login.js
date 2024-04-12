@@ -5,9 +5,9 @@ window.onload = function() {
     var showLoginForm = document.getElementById('showLoginForm');
 
     registerForm.addEventListener('submit', function(event) {
-        var email = document.getElementById('useremail').value;
-        var password = document.getElementById('password').value;
-        var confirmPassword= document.getElementById('confirmPassword').value;
+        var email = document.getElementById('r-useremail').value;
+        var password = document.getElementById('r-password').value;
+        var confirmPassword= document.getElementById('r-confirmPassword').value;
 
         if(!password || !email || !confirmPassword){
             event.preventDefault();
